@@ -1,0 +1,28 @@
+message:
+  remove: "&cYou are has been kicked with your island!"
+  teleport: "&aYou are has teleported to your island!"
+  already have: "&cYou are already have island!"
+  cant place: "&cYou can`t place the item."
+  same-island: "&cYour island type already instance it."
+  finish: "&aYou are finished $time"
+  beat-record: "&aYou are beat your record! $lastRecord/$record"
+  spectator:
+    join: "You join in spectator mode!"
+    quit: "You quit from spectator mode."
+
+sound:
+  spectator:
+    join: "NONE"
+    quit: "NONE"
+  start: "NONE"
+  exit: "NONE"
+  fail: "NONE"
+  finished: "NONE"
+  deny: "NONE"
+
+settings:
+  cancel-time-change: true
+  finish-block: DIAMOND_BLOCK
+
+  # NONE, FALLING, DROP, EXPLODE
+  block-remove-animation: FALLING

@@ -1,0 +1,24 @@
+name: BuildTrain
+version: 1
+main: me.rejomy.buildtrain.Main
+commands:
+  buildtrain:
+    aliases:
+      - bt
+
+permissions:
+  buildtrain.command.start:
+    description: "Start command."
+    default: true
+  buildtrain.command.spectate:
+    description: "Spectate command."
+    default: true
+  buildtrain.command.stop:
+    description: "Stop command."
+    default: true
+  buildtrain.command.toworld:
+    description: "Go to world command."
+    default: op
+  buildtrain.command.setting:
+    description: "Island create and etc... commands."
+    default: op
