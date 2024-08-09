@@ -29,7 +29,7 @@ public class LobbySubCommand extends SubCommand {
 
             file.getYaml().set("world", location.getWorld().getName());
             file.getYaml().set("x", location.getX());
-            file.getYaml().set("y", location.getYaw());
+            file.getYaml().set("y", location.getY());
             file.getYaml().set("z", location.getZ());
             file.getYaml().set("yaw", location.getYaw());
             file.getYaml().set("pitch", location.getPitch());
