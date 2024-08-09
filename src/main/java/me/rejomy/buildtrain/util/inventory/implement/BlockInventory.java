@@ -31,7 +31,9 @@ public class BlockInventory extends InventoryBuilder {
     @Override
     public void fill() {
         List<Material> materials = Arrays.stream(Material.values()).filter(material ->
-                material.isSolid() && material.isBlock()
+                material.isSolid() && material.isBlock() &&
+                        material != Material.BURNING_FURNACE &&
+                        material != Material.SOIL
         ).collect(Collectors.toList());
 
         int items = BLOCK_FILE.getYaml().getConfigurationSection("items").getKeys(false).size();
