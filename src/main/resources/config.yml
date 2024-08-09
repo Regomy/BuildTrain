@@ -26,3 +26,6 @@ settings:
 
   # NONE, FALLING, DROP, EXPLODE
   block-remove-animation: FALLING
+
+  # Should we save player inventory before give our items to player and give their when player leave from arena.
+  keep-inventory: false

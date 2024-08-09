@@ -12,9 +12,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -81,20 +80,32 @@ public class StartSubCommand extends SubCommand {
                     )).type : islandType
                 );
 
-        player.teleport(island.spawnPlayerLoc);
-        player.getInventory().clear();
         PlayerUtil.clearPotions(player);
+
+        player.teleport(island.spawnPlayerLoc);
+
         player.setGameMode(GameMode.SURVIVAL);
         player.setFlying(false);
         player.setAllowFlight(false);
 
-        player.getInventory().addItem(new ItemStack(data.inventory.CURRENT_BLOCK, 128));
+        // Save inventory if config option is enabled
+        if (Main.getInstance().getConfig().getBoolean("settings.keep-inventory")) {
+            data.savedInventory = new HashMap<>();
 
+            for (byte a = 0; a <= player.getInventory().getSize(); a++) {
+                data.savedInventory.put(a, player.getInventory().getItem(a));
+            }
+        }
+
+        player.getInventory().clear();
+        player.getInventory().addItem(new ItemStack(data.inventory.CURRENT_BLOCK, 128));
         player.getInventory().setItem(8, new ItemStack(Material.REDSTONE_COMPARATOR, 1));
 
-        sendMessage(sender, Main.getInstance().getConfig().getString("message.teleport"));
-        Main.getInstance().playerUtil.playSound(player, "sound.start", Main.INSTANCE.getConfig());
+        PlayerUtil.clearPotions(player);
 
+        sendMessage(sender, Main.getInstance().getConfig().getString("message.teleport"));
+
+        Main.getInstance().playerUtil.playSound(player, "sound.start", Main.INSTANCE.getConfig());
         return false;
     }
 
