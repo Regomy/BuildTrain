@@ -1,6 +1,7 @@
 package me.rejomy.buildtrain.util;
 
 import me.rejomy.buildtrain.Main;
+import me.rejomy.buildtrain.data.DataManager;
 import me.rejomy.buildtrain.data.PlayerData;
 import me.rejomy.buildtrain.island.Island;
 import org.bukkit.Bukkit;
@@ -13,6 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 public class PlayerUtil {
     public void playSound(Player player, String path, MemoryConfiguration config) {
@@ -67,6 +71,7 @@ public class PlayerUtil {
 
     public void finish(Player player) {
         PlayerData data = Main.getInstance().USERS.get(player);
+
         Bukkit.getScheduler().cancelTask(data.taskId);
 
         double timeSeconds = ((int) ((data.currentTime / 1000.0) * 100)) / 100.0;
@@ -78,6 +83,15 @@ public class PlayerUtil {
 
         if (timeSeconds < data.sessionBestTime) {
             data.sessionBestTime = timeSeconds;
+
+            // Handle for top
+            if (!Main.getInstance().getDataManager().bestForSession.contains(data)) {
+                Main.getInstance().getDataManager().bestForSession.add(data);
+            }
+
+            Main.getInstance().getDataManager().bestForSession = Main.getInstance().getDataManager().bestForSession.stream()
+                    .sorted(Comparator.comparingDouble(userData -> userData.sessionBestTime)).collect(Collectors.toList());
+            // Handle for top - close
         }
 
         if(data.currentTime < data.bestTime) {

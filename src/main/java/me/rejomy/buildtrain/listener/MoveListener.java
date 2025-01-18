@@ -3,9 +3,7 @@ package me.rejomy.buildtrain.listener;
 import me.rejomy.buildtrain.Main;
 import me.rejomy.buildtrain.data.PlayerData;
 import me.rejomy.buildtrain.island.Island;
-import me.rejomy.buildtrain.island.IslandManager;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +33,7 @@ public class MoveListener implements Listener {
 
                 Main.getInstance().playerUtil.reset(player);
                 Main.getInstance().playerUtil.playSound(player, "sound.fail", Main.getInstance().getConfig());
-            } else if(island.spawnPlayerLoc.getBlockZ() + 20 == to.getBlockZ()
+            } else if (island.spawnPlayerLoc.getBlockZ() + 20 - to.getBlockZ() < 2
                     && Math.abs(player.getLocation().getY() - island.spawnPlayerLoc.getY()) < 1.5) {
                 Main.getInstance().playerUtil.finish(player);
             }

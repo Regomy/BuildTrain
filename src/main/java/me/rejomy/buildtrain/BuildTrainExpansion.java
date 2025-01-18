@@ -2,6 +2,7 @@ package me.rejomy.buildtrain;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.rejomy.buildtrain.data.PlayerData;
+import me.rejomy.buildtrain.util.NumberUtil;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -30,9 +31,16 @@ public class BuildTrainExpansion extends PlaceholderExpansion {
             return String.valueOf(timeSeconds);
         }
 
-        if(params.equalsIgnoreCase("session_best")) {
-            PlayerData data = Main.getInstance().USERS.get(player);
-            return String.valueOf(data.sessionBestTime);
+        if(params.contains("session_best_")) {
+            String forParseTopNumber = params.replaceAll("session_best_", "");
+            int topNumber = NumberUtil.parseInt(forParseTopNumber);
+
+            if (Main.getInstance().getDataManager().bestForSession.size() < topNumber) {
+                return "";
+            }
+
+            PlayerData data = Main.getInstance().getDataManager().bestForSession.get(topNumber - 1);
+            return data.getPlayer().getName() + " - " + data.sessionBestTime;
         }
 
         if(params.equalsIgnoreCase("current")) {
@@ -44,7 +52,7 @@ public class BuildTrainExpansion extends PlaceholderExpansion {
         if(params.equalsIgnoreCase("island")) {
             PlayerData data = Main.getInstance().USERS.get(player);
 
-            return data.island != null? data.island.type : "err3";
+            return data.island != null? data.island.type : "UNEXPECTED";
         }
 
         if(params.equalsIgnoreCase("placed")) {
